@@ -14,10 +14,10 @@ import Appointment from 'components/Appointment/index';
 import Header from 'components/Appointment/Header';
 import Empty from 'components/Appointment/Empty';
 import Show from 'components/Appointment/Show';
-import Confirm from 'components/Appointment/Confirm'; 
+import Confirm from 'components/Appointment/Confirm';
 import Status from 'components/Appointment/Status';
 import Error from 'components/Appointment/Error';
-
+import Form from 'components/Appointment/Form';
 
 storiesOf("Button", module)
   .addParameters({
@@ -41,7 +41,7 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   }) // Provides the default background color for our component
   .add("Unselected", () => <DayListItem name="Monday" spots={5} />) // To define our stories, we call add() once for each of our test states to generate a story
-  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />) 
+  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
@@ -75,7 +75,7 @@ storiesOf("DayList", module)
   ))
   .add("Tuesday", () => (
     <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
-  ));  
+  ));
 
 
 const interviewer = {
@@ -128,14 +128,14 @@ storiesOf("InterviewerList", module)
   .add("Initial", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ))
   .add("Preselected", () => (
     <InterviewerList
       interviewers={interviewers}
-      interviewer={3}
-      setInterviewer={action("setInterviewer")}
+      value={3}
+      onChange={action("setInterviewer")}
     />
   ));
 
@@ -150,5 +150,7 @@ storiesOf("Appointment", module)
   .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => <Show student='Lydia Miller-Lonse' interviewer={interviewer} onEdit={action('onEdit')} onDelete={action('onDelete')} />)
   .add('Confirm', () => <Confirm message='Delete the appointment?' onConfirm={action('onConfirm')} onCancel={action('onCancel')} />)
-  .add('Status', () => <Status message='Deleting'/>)
+  .add('Status', () => <Status message='Deleting' />)
   .add('Error', () => <Error message='Could not delete appointment' onClose={action('onClose')} />)
+  .add('Edit', () => <Form name='Lydia Miller-Lonse' interviewers={interviewers} interviewer={1} onSave={action('onSave')} onCancel={action('onCancel')} />)
+  .add('Create', () => <Form interviewers={interviewers} onSave={action('onSave')} onCancel={action('onCancel')} />)
