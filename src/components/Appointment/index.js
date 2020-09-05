@@ -6,11 +6,11 @@ import Empty from 'components/Appointment/Empty';
 import 'components/Appointment/styles.scss';
 
 
-export default function Appointment (props) {
+export default function Appointment ({time, interview}) {
     return (
         <article className="appointment">
-            <Header time={props.time} />
-            { props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty /> }
+            <Header time={time} />
+            { interview ? <Show student={interview.student} interviewer={interview.interviewer} /> : <Empty /> }
         </article>
     )
 }
