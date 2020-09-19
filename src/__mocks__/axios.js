@@ -65,7 +65,6 @@ export default {
         data: fixtures.days
       });
     }
-
     if (url === "/api/appointments") {
       /* Resolve appointments data */
       return Promise.resolve({
@@ -81,6 +80,15 @@ export default {
         status: 200,
         statusText: "OK",
         data: fixtures.interviewers
+      });
+    }
+  }),
+
+  put: jest.fn(url => {
+    if (url.includes(`/api/appointments`)) {
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content",
       });
     }
   })
