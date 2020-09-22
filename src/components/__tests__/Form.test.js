@@ -1,8 +1,6 @@
 import React from "react";
 
-import { fireEvent } from "@testing-library/react";
-
-import { render, cleanup } from "@testing-library/react";
+import {  render, cleanup, fireEvent, getAllByPlaceholderText } from "@testing-library/react";
 
 import Form from "components/Appointment/Form";
 
@@ -44,15 +42,15 @@ describe("Form", () => {
   });
 
   it("can successfully save after trying to submit an empty student name", () => {
-    const onSave = jest.fn();
+    const onSave = jest.fn(); // Create mock function
     const { getByText, getByPlaceholderText, queryByText } = render(
-      <Form interviewers={interviewers} onSave={onSave} />
+      <Form interviewers={interviewers} onSave={onSave} /> // Pass mock function as prop
     );
 
     fireEvent.click(getByText("Save"));
 
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
-    expect(onSave).not.toHaveBeenCalled();
+    expect(onSave).toHaveBeenCalledTimes(0); // Called zero times
 
     fireEvent.change(getByPlaceholderText("Enter Student Name"), {
       target: { value: "Lydia Miller-Jones" }
@@ -60,7 +58,7 @@ describe("Form", () => {
 
     fireEvent.click(getByText("Save"));
 
-    expect(queryByText(/student name cannot be blank/i)).toBeNull();
+    expect(queryByText(/student name cannot be blank/i)).not.toBeInTheDocument();
 
     expect(onSave).toHaveBeenCalledTimes(1);
     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
@@ -71,7 +69,7 @@ describe("Form", () => {
     const { getByText, getByPlaceholderText, queryByText } = render(
       <Form
         interviewers={interviewers}
-        name="Lydia Mill-Jones"
+        name="Lydia Miller-Jones"
         onSave={jest.fn()}
         onCancel={onCancel}
       />

@@ -45,6 +45,21 @@ export default function Appointment(props) {
       .catch((error) => transition("ERROR_DELETE", true));
   };
 
+  
+  const onEdit = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+
+    transition("SAVING");
+    props
+      .editInterview(props.id, interview)
+      .then(() => transition("SHOW"))
+      .catch((error) => transition("ERROR_SAVE", true));
+  };
+
+  
   return (
     <article className="appointment" data-testid="appointment" >
       <Header time={props.time} />
@@ -67,14 +82,14 @@ export default function Appointment(props) {
           name={props.interview.student}
           interviewer={props.interview.interviewer.id}
           interviewers={props.interviewers}
-          onSave={save}
+          onSave={onEdit}
           onCancel={back}
         />
       )}
       {mode === SAVING && <Status message="Saving..." />}
       {mode === DELETING && <Status message="Deleting..." />}
       {mode === CONFIRM && (
-        <Confirm onDelete={deleteInterview} onCancel={back} />
+        <Confirm onDelete={deleteInterview} onCancel={back} message={"Are you sure you would like to delete?"} />
       )}
       {mode === ERROR_DELETE && (
         <Error message={"Could not delete appointment"} onClose={back} />
