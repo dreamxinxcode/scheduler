@@ -1,6 +1,6 @@
 import React from "react";
 
-import {  render, cleanup, fireEvent, getAllByPlaceholderText } from "@testing-library/react";
+import {  render, cleanup, fireEvent } from "@testing-library/react";
 
 import Form from "components/Appointment/Form";
 
@@ -32,7 +32,7 @@ describe("Form", () => {
   it("validates that the student name is not blank", () => {
     const onSave = jest.fn();
     const { getByText } = render(
-      <Form interviewers={interviewers} onSave={onSave} />
+      <Form interviewers={interviewers} onSave={(event) => event.preventDefault()} />
     );
 
     fireEvent.click(getByText("Save"));

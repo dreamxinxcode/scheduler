@@ -45,7 +45,6 @@ export default function Appointment(props) {
       .catch((error) => transition("ERROR_DELETE", true));
   };
 
-  
   const onEdit = (name, interviewer) => {
     const interview = {
       student: name,
@@ -59,9 +58,8 @@ export default function Appointment(props) {
       .catch((error) => transition("ERROR_SAVE", true));
   };
 
-  
   return (
-    <article className="appointment" data-testid="appointment" >
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
 
       {mode === EMPTY && <Empty onAdd={() => transition("CREATE")} />}
@@ -89,7 +87,11 @@ export default function Appointment(props) {
       {mode === SAVING && <Status message="Saving..." />}
       {mode === DELETING && <Status message="Deleting..." />}
       {mode === CONFIRM && (
-        <Confirm onDelete={deleteInterview} onCancel={back} message={"Are you sure you would like to delete?"} />
+        <Confirm
+          onDelete={deleteInterview}
+          onCancel={back}
+          message={"Are you sure you would like to delete?"}
+        />
       )}
       {mode === ERROR_DELETE && (
         <Error message={"Could not delete appointment"} onClose={back} />
